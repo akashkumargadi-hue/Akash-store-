@@ -286,14 +286,7 @@ function checkout() {
 
     message += `Total: ₹${total}\nPlease confirm availability and delivery details.`;
 
-    const phone = prompt(
-        "Enter your store WhatsApp number with country code, without + sign:"
-    );
-
-    if (!phone || !/^\d{10,15}$/.test(phone)) {
-        alert("Please enter a valid WhatsApp number.");
-        return;
-    }
+    const phone = "919701067275";
 
     window.open(
         "https://wa.me/" + phone + "?text=" + encodeURIComponent(message),
