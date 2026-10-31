@@ -6,9 +6,7 @@
 <title>AKASH STORE</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -35,9 +33,7 @@ header {
     border-radius: 6px;
 }
 
-h2 {
-    text-align: center;
-}
+h2 { text-align: center; }
 
 .products {
     display: grid;
@@ -67,11 +63,11 @@ h2 {
     font-size: 19px;
 }
 
-select {
+select, input, textarea {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 14px;
+    padding: 13px;
+    margin: 10px 0 18px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -94,15 +90,6 @@ button {
     border-radius: 10px;
 }
 
-input, textarea {
-    width: 100%;
-    padding: 13px;
-    margin: 10px 0 18px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 .remove {
     background: #b42318;
     width: auto;
@@ -114,8 +101,33 @@ input, textarea {
     margin-bottom: 15px;
 }
 
-.hidden {
-    display: none;
+.hidden { display: none; }
+
+.payment-box {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    margin: 10px 0;
+}
+
+.payment-option input {
+    width: auto;
+    margin: 0;
+}
+
+.pay-button {
+    background: #167b35;
+    margin: 12px 0;
 }
 
 footer {
@@ -135,8 +147,6 @@ footer {
 
 <body>
 
-<!-- FIRST PAGE -->
-
 <div id="homePage">
 
 <header>
@@ -144,29 +154,19 @@ footer {
     <p>Quality Products at Affordable Prices</p>
 </header>
 
-<input
-    class="search"
-    id="search"
-    type="search"
-    placeholder="🔍 Search products..."
->
+<input class="search" id="search" type="search"
+placeholder="🔍 Search products...">
 
 <h2>Our Products</h2>
 
 <div class="products" id="products"></div>
 
 <section class="cart">
-
     <h2>🛒 My Cart</h2>
-
     <div id="cartItems">Your cart is empty.</div>
-
     <h3>Total: ₹<span id="total">0</span></h3>
 
-    <button onclick="goToDetails()">
-        Place Order
-    </button>
-
+    <button onclick="goToDetails()">Place Order</button>
 </section>
 
 <footer>
@@ -177,8 +177,6 @@ footer {
 </div>
 
 
-<!-- SECOND PAGE -->
-
 <div id="detailsPage" class="hidden">
 
 <header>
@@ -188,464 +186,426 @@ footer {
 
 <section class="details">
 
-    <button class="back" onclick="goBack()">
-        ← Back to Shopping
-    </button>
+<button class="back" onclick="goBack()">
+← Back to Shopping
+</button>
 
-    <form id="customerForm">
+<form id="customerForm">
 
-        <label>Customer Name</label>
-        <input
-            type="text"
-            id="customerName"
-            placeholder="Enter your full name"
-            required
-        >
+<label>Customer Name</label>
+<input type="text" id="customerName"
+placeholder="Enter your full name" required>
 
-        <label>Phone Number</label>
-        <input
-            type="tel"
-            id="customerPhone"
-            placeholder="Enter 10-digit phone number"
-            pattern="[0-9]{10}"
-            maxlength="10"
-            inputmode="numeric"
-            required
-        >
+<label>Phone Number</label>
+<input type="tel" id="customerPhone"
+placeholder="Enter 10-digit phone number"
+pattern="[0-9]{10}" maxlength="10"
+inputmode="numeric" required>
 
-        <label>Full Address</label>
-        <textarea
-            id="customerAddress"
-            placeholder="House number, street, village/town, district"
-            rows="4"
-            required
-        ></textarea>
+<label>Full Address</label>
+<textarea id="customerAddress"
+placeholder="House number, street, village/town, district"
+rows="4" required></textarea>
 
-        <label>PIN Code</label>
-        <input
-            type="text"
-            id="customerPin"
-            placeholder="Enter 6-digit PIN code"
-            pattern="[0-9]{6}"
-            maxlength="6"
-            inputmode="numeric"
-            required
-        >
+<label>PIN Code</label>
+<input type="text" id="customerPin"
+placeholder="Enter 6-digit PIN code"
+pattern="[0-9]{6}" maxlength="6"
+inputmode="numeric" required>
 
-        <h3>Total: ₹<span id="finalTotal">0</span></h3>
+<h3>Total: ₹<span id="finalTotal">0</span></h3>
 
-        <button type="submit">
-            Confirm Order on WhatsApp
-        </button>
+<div class="payment-box">
 
-    </form>
+<h3>💳 Select Payment Method</h3>
+
+<label class="payment-option">
+<input type="radio" name="payment"
+value="UPI Online Payment" required>
+💳 Online Payment (UPI)
+</label>
+
+<label class="payment-option">
+<input type="radio" name="payment"
+value="Cash on Delivery (COD)">
+💵 Cash on Delivery (COD)
+</label>
+
+<div id="upiSection" class="hidden">
+
+<p><b>UPI ID:</b> 9701067275@axl</p>
+
+<button type="button" class="pay-button"
+onclick="payOnline()">
+Pay Online with UPI
+</button>
+
+<p style="font-size:13px;color:#555;">
+After payment, return to this page and confirm your order.
+Your payment must be verified separately.
+</p>
+
+</div>
+
+</div>
+
+<button type="submit">
+Confirm Order on WhatsApp
+</button>
+
+</form>
 
 </section>
-
 </div>
 
 
 <script>
 
-// PRODUCT DETAILS
+const UPI_ID = "9701067275@axl";
 
 const products = [
 
-    {
-        id: 1,
-        name: "Pappu nune",
-        telugu: "పప్పు నూనె",
-        image: "🛢️",
-        variants: [
-            { size: "1 Litre", price: 480 },
-            { size: "½ Litre", price: 240 }
-        ]
-    },
+{
+id:1, name:"Pappu nune", telugu:"పప్పు నూనె",
+image:"🛢️",
+variants:[
+{size:"1 Litre",price:480},
+{size:"½ Litre",price:240}
+]
+},
 
-    {
-        id: 2,
-        name: "kobari nune",
-        telugu: "కొబ్బరి నూనె",
-        image: "🥥",
-        variants: [
-            { size: "1 Litre", price: 260 },
-            { size: "½ Litre", price: 130 }
-        ]
-    },
+{
+id:2, name:"kobari nune", telugu:"కొబ్బరి నూనె",
+image:"🥥",
+variants:[
+{size:"1 Litre",price:260},
+{size:"½ Litre",price:130}
+]
+},
 
-    {
-        id: 3,
-        name: "nuvula nuve",
-        telugu: "నువ్వుల నూనె",
-        image: "🧴",
-        variants: [
-            { size: "1 Litre", price: 240 },
-            { size: "½ Litre", price: 120 }
-        ]
-    },
+{
+id:3, name:"nuvula nuve", telugu:"నువ్వుల నూనె",
+image:"🧴",
+variants:[
+{size:"1 Litre",price:240},
+{size:"½ Litre",price:120}
+]
+},
 
-    {
-        id: 4,
-        name: "verusenaga nune",
-        telugu: "వేరుశెనగ నూనె",
-        image: "🥜",
-        variants: [
-            { size: "1 Litre", price: 340 },
-            { size: "½ Litre", price: 170 }
-        ]
-    },
+{
+id:4, name:"verusenaga nune", telugu:"వేరుశెనగ నూనె",
+image:"🥜",
+variants:[
+{size:"1 Litre",price:340},
+{size:"½ Litre",price:170}
+]
+},
 
-    {
-        id: 5,
-        name: "kura karam",
-        telugu: "కూర కారం",
-        image: "🌶️",
-        variants: [
-            { size: "1 KG", price: 360 },
-            { size: "½ KG", price: 180 },
-            { size: "¼ KG", price: 90 }
-        ]
-    },
+{
+id:5, name:"kura karam", telugu:"కూర కారం",
+image:"🌶️",
+variants:[
+{size:"1 KG",price:360},
+{size:"½ KG",price:180},
+{size:"¼ KG",price:90}
+]
+},
 
-    {
-        id: 6,
-        name: "pachadi karam",
-        telugu: "పచ్చడి కారం",
-        image: "🌶️",
-        variants: [
-            { size: "1 KG", price: 500 },
-            { size: "½ KG", price: 250 },
-            { size: "¼ KG", price: 125 }
-        ]
-    },
+{
+id:6, name:"pachadi karam", telugu:"పచ్చడి కారం",
+image:"🌶️",
+variants:[
+{size:"1 KG",price:500},
+{size:"½ KG",price:250},
+{size:"¼ KG",price:125}
+]
+},
 
-    {
-        id: 7,
-        name: "pasupu",
-        telugu: "పసుపు",
-        image: "🟡",
-        variants: [
-            { size: "1 KG", price: 220 },
-            { size: "½ KG", price: 110 },
-            { size: "¼ KG", price: 55 }
-        ]
-    },
+{
+id:7, name:"pasupu", telugu:"పసుపు",
+image:"🟡",
+variants:[
+{size:"1 KG",price:220},
+{size:"½ KG",price:110},
+{size:"¼ KG",price:55}
+]
+},
 
-    {
-        id: 8,
-        name: "Kumkum",
-        telugu: "కుంకుమ",
-        image: "🔴",
-        variants: [
-            { size: "1 KG", price: 240 },
-            { size: "½ KG", price: 120 },
-            { size: "¼ KG", price: 60 }
-        ]
-    },
+{
+id:8, name:"Kumkum", telugu:"కుంకుమ",
+image:"🔴",
+variants:[
+{size:"1 KG",price:240},
+{size:"½ KG",price:120},
+{size:"¼ KG",price:60}
+]
+},
 
-    {
-        id: 9,
-        name: "Nupappu",
-        telugu: "నుపప్పు",
-        image: "🌾",
-        variants: [
-            { size: "1 KG", price: 240 },
-            { size: "½ KG", price: 120 },
-            { size: "¼ KG", price: 60 }
-        ]
-    },
+{
+id:9, name:"Nupappu", telugu:"నుపప్పు",
+image:"🌾",
+variants:[
+{size:"1 KG",price:240},
+{size:"½ KG",price:120},
+{size:"¼ KG",price:60}
+]
+},
 
-    {
-        id: 10,
-        name: "Telaga Pindi",
-        telugu: "తెలగపిండి",
-        image: "🌾",
-        variants: [
-            { size: "1 KG", price: 100 },
-            { size: "½ KG", price: 50 },
-            { size: "¼ KG", price: 25 }
-        ]
-    }
+{
+id:10, name:"Telaga Pindi", telugu:"తెలగపిండి",
+image:"🌾",
+variants:[
+{size:"1 KG",price:100},
+{size:"½ KG",price:50},
+{size:"¼ KG",price:25}
+]
+}
 
 ];
 
-
-// CART
-
 let cart = [];
-
-
-// DISPLAY PRODUCTS
 
 function showProducts(list) {
 
-    const area = document.getElementById("products");
+const area = document.getElementById("products");
+area.innerHTML = "";
 
-    area.innerHTML = "";
+list.forEach(product => {
 
-    list.forEach(product => {
+const options = product.variants.map((variant,index)=>`
+<option value="${index}">
+${variant.size} - ₹${variant.price}
+</option>
+`).join("");
 
-        const options = product.variants.map((variant, index) => `
-            <option value="${index}">
-                ${variant.size} - ₹${variant.price}
-            </option>
-        `).join("");
+area.innerHTML += `
+<div class="card">
+<div class="product-image">${product.image}</div>
+<h3>${product.name}</h3>
+<p>${product.telugu}</p>
+<select id="size-${product.id}">${options}</select>
+<button onclick="addToCart(${product.id})">
+Add to Cart
+</button>
+</div>
+`;
 
-        area.innerHTML += `
+});
 
-        <div class="card">
-
-            <div class="product-image">
-                ${product.image}
-            </div>
-
-            <h3>${product.name}</h3>
-
-            <p>${product.telugu}</p>
-
-            <select id="size-${product.id}">
-                ${options}
-            </select>
-
-            <button onclick="addToCart(${product.id})">
-                Add to Cart
-            </button>
-
-        </div>
-
-        `;
-
-    });
-
-    if (list.length === 0) {
-        area.innerHTML = "<p>No products found.</p>";
-    }
-
+if(list.length===0) {
+area.innerHTML="<p>No products found.</p>";
 }
 
-
-// ADD TO CART
+}
 
 function addToCart(id) {
 
-    const product = products.find(p => p.id === id);
+const product=products.find(p=>p.id===id);
+const selectedIndex=document.getElementById("size-"+id).value;
+const variant=product.variants[selectedIndex];
 
-    const selectedIndex =
-        document.getElementById("size-" + id).value;
+const item=cart.find(p=>p.id===id && p.size===variant.size);
 
-    const variant = product.variants[selectedIndex];
-
-    const item = cart.find(p =>
-        p.id === id && p.size === variant.size
-    );
-
-    if (item) {
-
-        item.quantity++;
-
-    } else {
-
-        cart.push({
-            id: id,
-            name: product.name,
-            telugu: product.telugu,
-            size: variant.size,
-            price: variant.price,
-            quantity: 1
-        });
-
-    }
-
-    showCart();
-
+if(item) {
+item.quantity++;
+} else {
+cart.push({
+id:id,
+name:product.name,
+telugu:product.telugu,
+size:variant.size,
+price:variant.price,
+quantity:1
+});
 }
 
+showCart();
 
-// REMOVE FROM CART
+}
 
 function removeFromCart(index) {
-
-    cart.splice(index, 1);
-
-    showCart();
-
+cart.splice(index,1);
+showCart();
 }
-
-
-// DISPLAY CART
 
 function showCart() {
 
-    const area = document.getElementById("cartItems");
+const area=document.getElementById("cartItems");
+let total=0;
 
-    let total = 0;
+if(cart.length===0) {
+area.innerHTML="Your cart is empty.";
+} else {
 
-    if (cart.length === 0) {
+area.innerHTML=cart.map((item,index)=>{
 
-        area.innerHTML = "Your cart is empty.";
+const itemTotal=item.price*item.quantity;
+total+=itemTotal;
 
-    } else {
+return `
+<p>
+<b>${item.name}</b> (${item.telugu})<br>
+Size: ${item.size}<br>
+₹${item.price} × ${item.quantity} = ₹${itemTotal}
+<button class="remove" onclick="removeFromCart(${index})">
+Remove
+</button>
+</p>
+<hr>
+`;
 
-        area.innerHTML = cart.map((item, index) => {
-
-            const itemTotal = item.price * item.quantity;
-
-            total += itemTotal;
-
-            return `
-
-            <p>
-
-                <b>${item.name}</b> (${item.telugu})<br>
-
-                Size: ${item.size}<br>
-
-                ₹${item.price} × ${item.quantity}
-                = ₹${itemTotal}
-
-                <button class="remove"
-                onclick="removeFromCart(${index})">
-                    Remove
-                </button>
-
-            </p>
-
-            <hr>
-
-            `;
-
-        }).join("");
-
-    }
-
-    document.getElementById("total").textContent = total;
-
-    document.getElementById("finalTotal").textContent = total;
+}).join("");
 
 }
 
+document.getElementById("total").textContent=total;
+document.getElementById("finalTotal").textContent=total;
 
-// OPEN CUSTOMER DETAILS
+}
 
 function goToDetails() {
 
-    if (cart.length === 0) {
-
-        alert("Please add products to your cart first.");
-
-        return;
-
-    }
-
-    document.getElementById("homePage").classList.add("hidden");
-
-    document.getElementById("detailsPage").classList.remove("hidden");
-
-    window.scrollTo(0, 0);
-
+if(cart.length===0) {
+alert("Please add products to your cart first.");
+return;
 }
 
+document.getElementById("homePage").classList.add("hidden");
+document.getElementById("detailsPage").classList.remove("hidden");
 
-// BACK TO SHOPPING
+window.scrollTo(0,0);
+
+}
 
 function goBack() {
 
-    document.getElementById("detailsPage").classList.add("hidden");
+document.getElementById("detailsPage").classList.add("hidden");
+document.getElementById("homePage").classList.remove("hidden");
 
-    document.getElementById("homePage").classList.remove("hidden");
-
-    window.scrollTo(0, 0);
+window.scrollTo(0,0);
 
 }
 
 
-// SEARCH PRODUCTS
+// PAYMENT METHOD SELECTION
 
-document.getElementById("search").addEventListener("input", event => {
+document.querySelectorAll('input[name="payment"]').forEach(option=>{
 
-    const query = event.target.value.toLowerCase();
+option.addEventListener("change",function(){
 
-    showProducts(
+const upiSection=document.getElementById("upiSection");
 
-        products.filter(p =>
-
-            p.name.toLowerCase().includes(query) ||
-
-            p.telugu.includes(query)
-
-        )
-
-    );
+if(this.value==="UPI Online Payment") {
+upiSection.classList.remove("hidden");
+} else {
+upiSection.classList.add("hidden");
+}
 
 });
+
+});
+
+
+// UPI PAYMENT
+
+function getTotal() {
+return cart.reduce((sum,item)=>
+sum+(item.price*item.quantity),0);
+}
+
+function payOnline() {
+
+const total=getTotal();
+
+if(total<=0) {
+alert("Your cart is empty.");
+return;
+}
+
+const upiURL=
+"upi://pay?pa="+encodeURIComponent(UPI_ID)+
+"&pn="+encodeURIComponent("AKASH STORE")+
+"&am="+total.toFixed(2)+
+"&cu=INR"+
+"&tn="+encodeURIComponent("AKASH STORE Order");
+
+window.location.href=upiURL;
+
+}
 
 
 // WHATSAPP ORDER
 
-document.getElementById("customerForm").addEventListener("submit", function(event) {
+document.getElementById("customerForm").addEventListener("submit",function(event){
 
-    event.preventDefault();
+event.preventDefault();
 
-    let name = document.getElementById("customerName").value.trim();
+const name=document.getElementById("customerName").value.trim();
+const phoneNumber=document.getElementById("customerPhone").value.trim();
+const address=document.getElementById("customerAddress").value.trim();
+const pin=document.getElementById("customerPin").value.trim();
 
-    let phoneNumber = document.getElementById("customerPhone").value.trim();
+const payment=document.querySelector('input[name="payment"]:checked');
 
-    let address = document.getElementById("customerAddress").value.trim();
+if(!payment) {
+alert("Please select a payment method.");
+return;
+}
 
-    let pin = document.getElementById("customerPin").value.trim();
+let message="NEW ORDER - AKASH STORE\n\n";
 
+message+="Customer Name: "+name+"\n";
+message+="Phone Number: "+phoneNumber+"\n";
+message+="Address: "+address+"\n";
+message+="PIN Code: "+pin+"\n\n";
 
-    let message = "NEW ORDER - AKASH STORE\n\n";
+message+="ORDER DETAILS:\n";
 
-    message += "Customer Name: " + name + "\n";
+cart.forEach(item=>{
 
-    message += "Phone Number: " + phoneNumber + "\n";
+const itemTotal=item.price*item.quantity;
 
-    message += "Address: " + address + "\n";
+message+=item.name+" ("+item.telugu+")\n";
+message+="Size: "+item.size+"\n";
+message+="Quantity: "+item.quantity+"\n";
+message+="Amount: ₹"+itemTotal+"\n\n";
 
-    message += "PIN Code: " + pin + "\n\n";
+});
 
-    message += "ORDER DETAILS:\n";
+message+="Total Amount: ₹"+getTotal()+"\n";
+message+="Payment Method: "+payment.value+"\n";
 
+if(payment.value==="UPI Online Payment") {
+message+="Payment Status: Awaiting verification by store owner\n";
+} else {
+message+="Payment Status: Cash on Delivery\n";
+}
 
-    let total = 0;
+const storeNumber="919701067275";
 
-    cart.forEach(item => {
+const whatsappURL=
+"https://wa.me/"+storeNumber+
+"?text="+encodeURIComponent(message);
 
-        const itemTotal = item.price * item.quantity;
-
-        message += item.name + " (" + item.telugu + ")\n";
-
-        message += "Size: " + item.size + "\n";
-
-        message += "Quantity: " + item.quantity + "\n";
-
-        message += "Amount: ₹" + itemTotal + "\n\n";
-
-        total += itemTotal;
-
-    });
-
-
-    message += "Total Amount: ₹" + total;
-
-
-    const storeNumber = "919701067275";
-
-    const whatsappURL =
-        "https://wa.me/" + storeNumber +
-        "?text=" + encodeURIComponent(message);
-
-
-    window.location.href = whatsappURL;
+window.location.href=whatsappURL;
 
 });
 
 
-// START WEBSITE
+// SEARCH
+
+document.getElementById("search").addEventListener("input",event=>{
+
+const query=event.target.value.toLowerCase();
+
+showProducts(products.filter(p=>
+p.name.toLowerCase().includes(query) ||
+p.telugu.includes(query)
+));
+
+});
 
 showProducts(products);
-
 showCart();
 
 </script>
