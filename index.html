@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,7 +6,9 @@
 <title>AKASH STORE</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
@@ -29,9 +31,13 @@ header {
     padding: 13px;
     margin: 18px auto;
     font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
-h2 { text-align: center; }
+h2 {
+    text-align: center;
+}
 
 .products {
     display: grid;
@@ -61,6 +67,15 @@ h2 { text-align: center; }
     font-size: 19px;
 }
 
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 button {
     background: #075e54;
     color: white;
@@ -84,11 +99,14 @@ input, textarea {
     padding: 13px;
     margin: 10px 0 18px;
     font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .remove {
     background: #b42318;
     width: auto;
+    padding: 8px 12px;
 }
 
 .back {
@@ -96,7 +114,9 @@ input, textarea {
     margin-bottom: 15px;
 }
 
-.hidden { display: none; }
+.hidden {
+    display: none;
+}
 
 footer {
     background: #075e54;
@@ -136,6 +156,7 @@ footer {
 <div class="products" id="products"></div>
 
 <section class="cart">
+
     <h2>🛒 My Cart</h2>
 
     <div id="cartItems">Your cart is empty.</div>
@@ -145,6 +166,7 @@ footer {
     <button onclick="goToDetails()">
         Place Order
     </button>
+
 </section>
 
 <footer>
@@ -173,25 +195,42 @@ footer {
     <form id="customerForm">
 
         <label>Customer Name</label>
-        <input type="text" id="customerName"
-        placeholder="Enter your full name" required>
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Enter your full name"
+            required
+        >
 
         <label>Phone Number</label>
-        <input type="tel" id="customerPhone"
-        placeholder="Enter 10-digit phone number"
-        pattern="[0-9]{10}" maxlength="10"
-        inputmode="numeric" required>
+        <input
+            type="tel"
+            id="customerPhone"
+            placeholder="Enter 10-digit phone number"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            inputmode="numeric"
+            required
+        >
 
         <label>Full Address</label>
-        <textarea id="customerAddress"
-        placeholder="House number, street, village/town, district"
-        rows="4" required></textarea>
+        <textarea
+            id="customerAddress"
+            placeholder="House number, street, village/town, district"
+            rows="4"
+            required
+        ></textarea>
 
         <label>PIN Code</label>
-        <input type="text" id="customerPin"
-        placeholder="Enter 6-digit PIN code"
-        pattern="[0-9]{6}" maxlength="6"
-        inputmode="numeric" required>
+        <input
+            type="text"
+            id="customerPin"
+            placeholder="Enter 6-digit PIN code"
+            pattern="[0-9]{6}"
+            maxlength="6"
+            inputmode="numeric"
+            required
+        >
 
         <h3>Total: ₹<span id="finalTotal">0</span></h3>
 
@@ -208,52 +247,172 @@ footer {
 
 <script>
 
+// PRODUCT DETAILS
+
 const products = [
-{
-id: 1,
-name: "Groundnut Oil",
-price: 100,
-image: "🛢️"
-},
-{
-id: 2,
-name: "Sunflower Oil",
-price: 150,
-image: "🧴"
-},
-{
-id: 3,
-name: "Karam Powder",
-price: 80,
-image: "🌶️"
-},
-{
-id: 4,
-name: "Pasupu Powder",
-price: 120,
-image: "🟡"
-}
+
+    {
+        id: 1,
+        name: "Pappu Oil",
+        telugu: "పప్పు నూనె",
+        image: "🛢️",
+        variants: [
+            { size: "1 Litre", price: 480 },
+            { size: "½ Litre", price: 240 }
+        ]
+    },
+
+    {
+        id: 2,
+        name: "Coconut Oil",
+        telugu: "కొబ్బరి నూనె",
+        image: "🥥",
+        variants: [
+            { size: "1 Litre", price: 260 },
+            { size: "½ Litre", price: 130 }
+        ]
+    },
+
+    {
+        id: 3,
+        name: "Sesame Oil",
+        telugu: "నువ్వుల నూనె",
+        image: "🧴",
+        variants: [
+            { size: "1 Litre", price: 240 },
+            { size: "½ Litre", price: 120 }
+        ]
+    },
+
+    {
+        id: 4,
+        name: "Groundnut Oil",
+        telugu: "వేరుశెనగ నూనె",
+        image: "🥜",
+        variants: [
+            { size: "1 Litre", price: 340 },
+            { size: "½ Litre", price: 170 }
+        ]
+    },
+
+    {
+        id: 5,
+        name: "Curry Powder",
+        telugu: "కూర కారం",
+        image: "🌶️",
+        variants: [
+            { size: "1 KG", price: 360 },
+            { size: "½ KG", price: 180 },
+            { size: "¼ KG", price: 90 }
+        ]
+    },
+
+    {
+        id: 6,
+        name: "Pickle Chilli Powder",
+        telugu: "పచ్చడి కారం",
+        image: "🌶️",
+        variants: [
+            { size: "1 KG", price: 500 },
+            { size: "½ KG", price: 250 },
+            { size: "¼ KG", price: 125 }
+        ]
+    },
+
+    {
+        id: 7,
+        name: "Turmeric Powder",
+        telugu: "పసుపు",
+        image: "🟡",
+        variants: [
+            { size: "1 KG", price: 220 },
+            { size: "½ KG", price: 110 },
+            { size: "¼ KG", price: 55 }
+        ]
+    },
+
+    {
+        id: 8,
+        name: "Kumkum",
+        telugu: "కుంకుమ",
+        image: "🔴",
+        variants: [
+            { size: "1 KG", price: 240 },
+            { size: "½ KG", price: 120 },
+            { size: "¼ KG", price: 60 }
+        ]
+    },
+
+    {
+        id: 9,
+        name: "Nupappu",
+        telugu: "నుపప్పు",
+        image: "🌾",
+        variants: [
+            { size: "1 KG", price: 240 },
+            { size: "½ KG", price: 120 },
+            { size: "¼ KG", price: 60 }
+        ]
+    },
+
+    {
+        id: 10,
+        name: "Telaga Pindi",
+        telugu: "తెలగపిండి",
+        image: "🌾",
+        variants: [
+            { size: "1 KG", price: 100 },
+            { size: "½ KG", price: 50 },
+            { size: "¼ KG", price: 25 }
+        ]
+    }
+
 ];
 
+
+// CART
+
 let cart = [];
+
+
+// DISPLAY PRODUCTS
 
 function showProducts(list) {
 
     const area = document.getElementById("products");
+
     area.innerHTML = "";
 
     list.forEach(product => {
 
+        const options = product.variants.map((variant, index) => `
+            <option value="${index}">
+                ${variant.size} - ₹${variant.price}
+            </option>
+        `).join("");
+
         area.innerHTML += `
+
         <div class="card">
-            <div class="product-image">${product.image}</div>
+
+            <div class="product-image">
+                ${product.image}
+            </div>
+
             <h3>${product.name}</h3>
-            <p class="price">₹${product.price}</p>
+
+            <p>${product.telugu}</p>
+
+            <select id="size-${product.id}">
+                ${options}
+            </select>
 
             <button onclick="addToCart(${product.id})">
                 Add to Cart
             </button>
+
         </div>
+
         `;
 
     });
@@ -261,31 +420,64 @@ function showProducts(list) {
     if (list.length === 0) {
         area.innerHTML = "<p>No products found.</p>";
     }
+
 }
+
+
+// ADD TO CART
 
 function addToCart(id) {
 
-    const item = cart.find(p => p.id === id);
+    const product = products.find(p => p.id === id);
+
+    const selectedIndex =
+        document.getElementById("size-" + id).value;
+
+    const variant = product.variants[selectedIndex];
+
+    const item = cart.find(p =>
+        p.id === id && p.size === variant.size
+    );
 
     if (item) {
+
         item.quantity++;
+
     } else {
-        const product = products.find(p => p.id === id);
-        cart.push({...product, quantity: 1});
+
+        cart.push({
+            id: id,
+            name: product.name,
+            telugu: product.telugu,
+            size: variant.size,
+            price: variant.price,
+            quantity: 1
+        });
+
     }
 
     showCart();
+
 }
 
-function removeFromCart(id) {
 
-    cart = cart.filter(p => p.id !== id);
+// REMOVE FROM CART
+
+function removeFromCart(index) {
+
+    cart.splice(index, 1);
+
     showCart();
+
 }
+
+
+// DISPLAY CART
 
 function showCart() {
 
     const area = document.getElementById("cartItems");
+
     let total = 0;
 
     if (cart.length === 0) {
@@ -294,20 +486,32 @@ function showCart() {
 
     } else {
 
-        area.innerHTML = cart.map(item => {
+        area.innerHTML = cart.map((item, index) => {
 
-            total += item.price * item.quantity;
+            const itemTotal = item.price * item.quantity;
+
+            total += itemTotal;
 
             return `
-            <p>
-            ${item.name} × ${item.quantity}
-            = ₹${item.price * item.quantity}
 
-            <button class="remove"
-            onclick="removeFromCart(${item.id})">
-            Remove
-            </button>
+            <p>
+
+                <b>${item.name}</b> (${item.telugu})<br>
+
+                Size: ${item.size}<br>
+
+                ₹${item.price} × ${item.quantity}
+                = ₹${itemTotal}
+
+                <button class="remove"
+                onclick="removeFromCart(${index})">
+                    Remove
+                </button>
+
             </p>
+
+            <hr>
+
             `;
 
         }).join("");
@@ -315,84 +519,133 @@ function showCart() {
     }
 
     document.getElementById("total").textContent = total;
+
     document.getElementById("finalTotal").textContent = total;
+
 }
+
+
+// OPEN CUSTOMER DETAILS
 
 function goToDetails() {
 
     if (cart.length === 0) {
+
         alert("Please add products to your cart first.");
+
         return;
+
     }
 
     document.getElementById("homePage").classList.add("hidden");
+
     document.getElementById("detailsPage").classList.remove("hidden");
 
     window.scrollTo(0, 0);
+
 }
+
+
+// BACK TO SHOPPING
 
 function goBack() {
 
     document.getElementById("detailsPage").classList.add("hidden");
+
     document.getElementById("homePage").classList.remove("hidden");
 
     window.scrollTo(0, 0);
+
 }
+
+
+// SEARCH PRODUCTS
 
 document.getElementById("search").addEventListener("input", event => {
 
     const query = event.target.value.toLowerCase();
 
     showProducts(
+
         products.filter(p =>
-            p.name.toLowerCase().includes(query)
+
+            p.name.toLowerCase().includes(query) ||
+
+            p.telugu.includes(query)
+
         )
+
     );
 
 });
+
+
+// WHATSAPP ORDER
 
 document.getElementById("customerForm").addEventListener("submit", function(event) {
 
     event.preventDefault();
 
     let name = document.getElementById("customerName").value.trim();
+
     let phoneNumber = document.getElementById("customerPhone").value.trim();
+
     let address = document.getElementById("customerAddress").value.trim();
+
     let pin = document.getElementById("customerPin").value.trim();
+
 
     let message = "NEW ORDER - AKASH STORE\n\n";
 
     message += "Customer Name: " + name + "\n";
+
     message += "Phone Number: " + phoneNumber + "\n";
+
     message += "Address: " + address + "\n";
+
     message += "PIN Code: " + pin + "\n\n";
 
     message += "ORDER DETAILS:\n";
+
 
     let total = 0;
 
     cart.forEach(item => {
 
-        message += item.name + " x " + item.quantity +
-        " = ₹" + (item.price * item.quantity) + "\n";
+        const itemTotal = item.price * item.quantity;
 
-        total += item.price * item.quantity;
+        message += item.name + " (" + item.telugu + ")\n";
+
+        message += "Size: " + item.size + "\n";
+
+        message += "Quantity: " + item.quantity + "\n";
+
+        message += "Amount: ₹" + itemTotal + "\n\n";
+
+        total += itemTotal;
 
     });
 
-    message += "\nTotal Amount: ₹" + total;
+
+    message += "Total Amount: ₹" + total;
+
 
     const storeNumber = "919701067275";
 
     const whatsappURL =
-    "https://wa.me/" + storeNumber +
-    "?text=" + encodeURIComponent(message);
+        "https://wa.me/" + storeNumber +
+        "?text=" + encodeURIComponent(message);
+
 
     window.location.href = whatsappURL;
 
 });
 
+
+// START WEBSITE
+
 showProducts(products);
+
 showCart();
 
 </script>
