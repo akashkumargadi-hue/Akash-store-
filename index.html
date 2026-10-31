@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,9 +6,7 @@
 <title>AKASH STORE</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -20,17 +18,8 @@ body {
 header {
     background: #075e54;
     color: white;
-    padding: 20px 12px;
+    padding: 20px;
     text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 28px;
-}
-
-header p {
-    margin-bottom: 0;
 }
 
 .search {
@@ -39,14 +28,10 @@ header p {
     max-width: 500px;
     padding: 13px;
     margin: 18px auto;
-    border: 1px solid #ccc;
-    border-radius: 8px;
     font-size: 16px;
 }
 
-h2 {
-    text-align: center;
-}
+h2 { text-align: center; }
 
 .products {
     display: grid;
@@ -67,11 +52,7 @@ h2 {
 
 .product-image {
     font-size: 55px;
-    padding: 15px 0;
-}
-
-.card h3 {
-    font-size: 17px;
+    padding: 15px;
 }
 
 .price {
@@ -84,56 +65,59 @@ button {
     background: #075e54;
     color: white;
     border: none;
-    padding: 11px;
+    padding: 13px;
     border-radius: 6px;
     cursor: pointer;
     width: 100%;
-    font-size: 14px;
+    font-size: 15px;
 }
 
-.cart {
+.cart, .details {
     background: white;
-    padding: 18px;
+    padding: 20px;
     margin: 20px 12px;
     border-radius: 10px;
 }
 
-#cartItems p {
-    border-bottom: 1px solid #ddd;
-    padding: 8px 0;
+input, textarea {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0 18px;
+    font-size: 16px;
 }
 
 .remove {
     background: #b42318;
     width: auto;
-    margin-left: 8px;
 }
 
-.order {
-    display: block;
-    max-width: 350px;
-    margin: 15px auto;
-    text-decoration: none;
-    text-align: center;
+.back {
+    background: #555;
+    margin-bottom: 15px;
 }
+
+.hidden { display: none; }
 
 footer {
-    text-align: center;
     background: #075e54;
     color: white;
+    text-align: center;
     padding: 18px;
-    margin-top: 25px;
 }
 
 @media (min-width: 650px) {
     .products {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 </style>
 </head>
 
 <body>
+
+<!-- FIRST PAGE -->
+
+<div id="homePage">
 
 <header>
     <h1>🛍️ AKASH STORE</h1>
@@ -150,44 +134,17 @@ footer {
 <h2>Our Products</h2>
 
 <div class="products" id="products"></div>
-    <section class="cart">
-    <h2>📋 Delivery Details</h2><label for="customerName">Customer Name</label>
-<input type="text" id="customerName"
-    placeholder="Enter your full name"
-    required
-    style="width:100%;padding:12px;margin:8px 0 15px;">
-
-<label for="customerPhone">Phone Number</label>
-<input type="tel" id="customerPhone"
-    placeholder="Enter 10-digit phone number"
-    maxlength="10"
-    inputmode="numeric"
-    required
-    style="width:100%;padding:12px;margin:8px 0 15px;">
-
-<label for="customerAddress">Full Address</label>
-<textarea id="customerAddress"
-    placeholder="House number, street, village/town, district"
-    rows="3"
-    required
-    style="width:100%;padding:12px;margin:8px 0 15px;"></textarea>
-
-<label for="customerPin">PIN Code</label>
-<input type="text" id="customerPin"
-    placeholder="Enter 6-digit PIN code"
-    maxlength="6"
-    inputmode="numeric"
-    required
-    style="width:100%;padding:12px;margin:8px 0 15px;">
-
-    </section>
 
 <section class="cart">
     <h2>🛒 My Cart</h2>
+
     <div id="cartItems">Your cart is empty.</div>
+
     <h3>Total: ₹<span id="total">0</span></h3>
-    <button onclick="checkout()">Place Order on WhatsApp</button>
-    <p id="message"></p>
+
+    <button onclick="goToDetails()">
+        Place Order
+    </button>
 </section>
 
 <footer>
@@ -195,7 +152,62 @@ footer {
     <p>Thank you for shopping with us!</p>
 </footer>
 
+</div>
+
+
+<!-- SECOND PAGE -->
+
+<div id="detailsPage" class="hidden">
+
+<header>
+    <h1>📋 Delivery Details</h1>
+    <p>Enter Your Customer Details</p>
+</header>
+
+<section class="details">
+
+    <button class="back" onclick="goBack()">
+        ← Back to Shopping
+    </button>
+
+    <form id="customerForm">
+
+        <label>Customer Name</label>
+        <input type="text" id="customerName"
+        placeholder="Enter your full name" required>
+
+        <label>Phone Number</label>
+        <input type="tel" id="customerPhone"
+        placeholder="Enter 10-digit phone number"
+        pattern="[0-9]{10}" maxlength="10"
+        inputmode="numeric" required>
+
+        <label>Full Address</label>
+        <textarea id="customerAddress"
+        placeholder="House number, street, village/town, district"
+        rows="4" required></textarea>
+
+        <label>PIN Code</label>
+        <input type="text" id="customerPin"
+        placeholder="Enter 6-digit PIN code"
+        pattern="[0-9]{6}" maxlength="6"
+        inputmode="numeric" required>
+
+        <h3>Total: ₹<span id="finalTotal">0</span></h3>
+
+        <button type="submit">
+            Confirm Order on WhatsApp
+        </button>
+
+    </form>
+
+</section>
+
+</div>
+
+
 <script>
+
 const products = [
 {
 id: 1,
@@ -226,20 +238,24 @@ image: "🟡"
 let cart = [];
 
 function showProducts(list) {
+
     const area = document.getElementById("products");
     area.innerHTML = "";
 
     list.forEach(product => {
+
         area.innerHTML += `
-            <div class="card">
-                <div class="product-image">${product.image}</div>
-                <h3>${product.name}</h3>
-                <p class="price">₹${product.price}</p>
-                <button onclick="addToCart(${product.id})">
-                    Add to Cart
-                </button>
-            </div>
+        <div class="card">
+            <div class="product-image">${product.image}</div>
+            <h3>${product.name}</h3>
+            <p class="price">₹${product.price}</p>
+
+            <button onclick="addToCart(${product.id})">
+                Add to Cart
+            </button>
+        </div>
         `;
+
     });
 
     if (list.length === 0) {
@@ -248,12 +264,13 @@ function showProducts(list) {
 }
 
 function addToCart(id) {
-    const item = cart.find(product => product.id === id);
+
+    const item = cart.find(p => p.id === id);
 
     if (item) {
         item.quantity++;
     } else {
-        const product = products.find(product => product.id === id);
+        const product = products.find(p => p.id === id);
         cart.push({...product, quantity: 1});
     }
 
@@ -261,71 +278,123 @@ function addToCart(id) {
 }
 
 function removeFromCart(id) {
-    cart = cart.filter(product => product.id !== id);
+
+    cart = cart.filter(p => p.id !== id);
     showCart();
 }
 
 function showCart() {
+
     const area = document.getElementById("cartItems");
     let total = 0;
 
     if (cart.length === 0) {
+
         area.innerHTML = "Your cart is empty.";
+
     } else {
+
         area.innerHTML = cart.map(item => {
+
             total += item.price * item.quantity;
 
             return `
-                <p>
-                    ${item.name} × ${item.quantity}
-                    = ₹${item.price * item.quantity}
-                    <button class="remove"
-                    onclick="removeFromCart(${item.id})">
-                    Remove
-                    </button>
-                </p>
+            <p>
+            ${item.name} × ${item.quantity}
+            = ₹${item.price * item.quantity}
+
+            <button class="remove"
+            onclick="removeFromCart(${item.id})">
+            Remove
+            </button>
+            </p>
             `;
+
         }).join("");
+
     }
 
     document.getElementById("total").textContent = total;
+    document.getElementById("finalTotal").textContent = total;
 }
 
-document.getElementById("search").addEventListener("input", event => {
-    const query = event.target.value.toLowerCase();
+function goToDetails() {
 
-    showProducts(
-        products.filter(product =>
-            product.name.toLowerCase().includes(query)
-        )
-    );
-});
-
-function checkout() {
     if (cart.length === 0) {
         alert("Please add products to your cart first.");
         return;
     }
 
-    let message = "Hello AKASH STORE! I want to order:\n";
+    document.getElementById("homePage").classList.add("hidden");
+    document.getElementById("detailsPage").classList.remove("hidden");
+
+    window.scrollTo(0, 0);
+}
+
+function goBack() {
+
+    document.getElementById("detailsPage").classList.add("hidden");
+    document.getElementById("homePage").classList.remove("hidden");
+
+    window.scrollTo(0, 0);
+}
+
+document.getElementById("search").addEventListener("input", event => {
+
+    const query = event.target.value.toLowerCase();
+
+    showProducts(
+        products.filter(p =>
+            p.name.toLowerCase().includes(query)
+        )
+    );
+
+});
+
+document.getElementById("customerForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    let name = document.getElementById("customerName").value.trim();
+    let phoneNumber = document.getElementById("customerPhone").value.trim();
+    let address = document.getElementById("customerAddress").value.trim();
+    let pin = document.getElementById("customerPin").value.trim();
+
+    let message = "NEW ORDER - AKASH STORE\n\n";
+
+    message += "Customer Name: " + name + "\n";
+    message += "Phone Number: " + phoneNumber + "\n";
+    message += "Address: " + address + "\n";
+    message += "PIN Code: " + pin + "\n\n";
+
+    message += "ORDER DETAILS:\n";
+
     let total = 0;
 
     cart.forEach(item => {
-        message += `${item.name} x ${item.quantity} = ₹${item.price * item.quantity}\n`;
+
+        message += item.name + " x " + item.quantity +
+        " = ₹" + (item.price * item.quantity) + "\n";
+
         total += item.price * item.quantity;
+
     });
 
-    message += `Total: ₹${total}\nPlease confirm availability and delivery details.`;
+    message += "\nTotal Amount: ₹" + total;
 
-    const phone = "919701067275";
+    const storeNumber = "919701067275";
 
-    window.open(
-        "https://wa.me/" + phone + "?text=" + encodeURIComponent(message),
-        "_blank"
-    );
-}
+    const whatsappURL =
+    "https://wa.me/" + storeNumber +
+    "?text=" + encodeURIComponent(message);
+
+    window.location.href = whatsappURL;
+
+});
 
 showProducts(products);
+showCart();
+
 </script>
 
 </body>
