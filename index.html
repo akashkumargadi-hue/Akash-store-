@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AKASH STORE</title>
-
-<style>
+<title>AKASH STORE</title><style>
 * { box-sizing: border-box; }
 
 body {
@@ -110,24 +107,16 @@ button {
     margin: 15px 0;
 }
 
-.payment-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    margin: 10px 0;
+.payment-info {
+    background: #f0f8f5;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #075e54;
+    line-height: 1.7;
 }
 
-.payment-option input {
-    width: auto;
-    margin: 0;
-}
-
-.pay-button {
-    background: #167b35;
-    margin: 12px 0;
+.payment-info p {
+    margin: 8px 0;
 }
 
 footer {
@@ -142,57 +131,26 @@ footer {
         grid-template-columns: repeat(3, 1fr);
     }
 }
-</style>
-</head>
-
-<body>
-
-<div id="homePage">
-
-<header>
+</style></head><body><div id="homePage"><header>
     <h1>🛍️ AKASH STORE</h1>
     <p>Quality Products at Affordable Prices</p>
-</header>
-
-<input class="search" id="search" type="search"
+</header><input class="search" id="search" type="search"
 placeholder="🔍 Search products...">
 
-<h2>Our Products</h2>
-
-<div class="products" id="products"></div>
-
-<section class="cart">
+<h2>Our Products</h2><div class="products" id="products"></div><section class="cart">
     <h2>🛒 My Cart</h2>
     <div id="cartItems">Your cart is empty.</div>
-    <h3>Total: ₹<span id="total">0</span></h3>
+    <h3>Total: ₹<span id="total">0</span></h3><button onclick="goToDetails()">Place Order</button>
 
-    <button onclick="goToDetails()">Place Order</button>
-</section>
-
-<footer>
+</section><footer>
     <p>AKASH STORE</p>
     <p>Thank you for shopping with us!</p>
-</footer>
-
-</div>
-
-
-<div id="detailsPage" class="hidden">
-
-<header>
+</footer></div><div id="detailsPage" class="hidden"><header>
     <h1>📋 Delivery Details</h1>
     <p>Enter Your Customer Details</p>
-</header>
-
-<section class="details">
-
-<button class="back" onclick="goBack()">
+</header><section class="details"><button class="back" onclick="goBack()">
 ← Back to Shopping
-</button>
-
-<form id="customerForm">
-
-<label>Customer Name</label>
+</button><form id="customerForm"><label>Customer Name</label>
 <input type="text" id="customerName"
 placeholder="Enter your full name" required>
 
@@ -203,65 +161,19 @@ pattern="[0-9]{10}" maxlength="10"
 inputmode="numeric" required>
 
 <label>Full Address</label>
+
 <textarea id="customerAddress"
 placeholder="House number, street, village/town, district"
-rows="4" required></textarea>
-
-<label>PIN Code</label>
+rows="4" required></textarea><label>PIN Code</label>
 <input type="text" id="customerPin"
 placeholder="Enter 6-digit PIN code"
 pattern="[0-9]{6}" maxlength="6"
 inputmode="numeric" required>
 
-<h3>Total: ₹<span id="finalTotal">0</span></h3>
-
-<div class="payment-box">
-
-<h3>💳 Select Payment Method</h3>
-
-<label class="payment-option">
-<input type="radio" name="payment"
-value="UPI Online Payment" required>
-💳 Online Payment (UPI)
-</label>
-
-<label class="payment-option">
-<input type="radio" name="payment"
-value="Cash on Delivery (COD)">
-💵 Cash on Delivery (COD)
-</label>
-
-<div id="upiSection" class="hidden">
-
-<p><b>UPI ID:</b> 9701067275@axl</p>
-
-<button type="button" class="pay-button"
-onclick="payOnline()">
-Pay Online with UPI
-</button>
-
-<p style="font-size:13px;color:#555;">
-After payment, return to this page and confirm your order.
-Your payment must be verified separately.
-</p>
-
-</div>
-
-</div>
-
-<button type="submit">
+<h3>Total: ₹<span id="finalTotal">0</span></h3><div class="payment-box"><h3>💳 Payment Method</h3><div class="payment-info"><p><b>Only Online Payment</b></p><p>You will receive a QR code on WhatsApp.</p><p>Scan the QR code and complete your payment.</p></div></div><button type="submit">
 Confirm Order on WhatsApp
-</button>
-
-</form>
-
-</section>
-</div>
-
-
-<script>
-
-const UPI_ID = "9701067275@axl";
+</button></form></section>
+</div><script>
 
 const products = [
 
@@ -463,6 +375,11 @@ document.getElementById("finalTotal").textContent=total;
 
 }
 
+function getTotal() {
+return cart.reduce((sum,item)=>
+sum+(item.price*item.quantity),0);
+}
+
 function goToDetails() {
 
 if(cart.length===0) {
@@ -487,53 +404,6 @@ window.scrollTo(0,0);
 }
 
 
-// PAYMENT METHOD SELECTION
-
-document.querySelectorAll('input[name="payment"]').forEach(option=>{
-
-option.addEventListener("change",function(){
-
-const upiSection=document.getElementById("upiSection");
-
-if(this.value==="UPI Online Payment") {
-upiSection.classList.remove("hidden");
-} else {
-upiSection.classList.add("hidden");
-}
-
-});
-
-});
-
-
-// UPI PAYMENT
-
-function getTotal() {
-return cart.reduce((sum,item)=>
-sum+(item.price*item.quantity),0);
-}
-
-function payOnline() {
-
-const total=getTotal();
-
-if(total<=0) {
-alert("Your cart is empty.");
-return;
-}
-
-const upiURL=
-"upi://pay?pa="+encodeURIComponent(UPI_ID)+
-"&pn="+encodeURIComponent("AKASH STORE")+
-"&am="+total.toFixed(2)+
-"&cu=INR"+
-"&tn="+encodeURIComponent("AKASH STORE Order");
-
-window.location.href=upiURL;
-
-}
-
-
 // WHATSAPP ORDER
 
 document.getElementById("customerForm").addEventListener("submit",function(event){
@@ -544,13 +414,6 @@ const name=document.getElementById("customerName").value.trim();
 const phoneNumber=document.getElementById("customerPhone").value.trim();
 const address=document.getElementById("customerAddress").value.trim();
 const pin=document.getElementById("customerPin").value.trim();
-
-const payment=document.querySelector('input[name="payment"]:checked');
-
-if(!payment) {
-alert("Please select a payment method.");
-return;
-}
 
 let message="NEW ORDER - AKASH STORE\n\n";
 
@@ -573,13 +436,10 @@ message+="Amount: ₹"+itemTotal+"\n\n";
 });
 
 message+="Total Amount: ₹"+getTotal()+"\n";
-message+="Payment Method: "+payment.value+"\n";
+message+="Payment Method: Only Online Payment\n";
+message+="Payment Status: Awaiting QR code and payment verification\n";
 
-if(payment.value==="UPI Online Payment") {
-message+="Payment Status: Awaiting verification by store owner\n";
-} else {
-message+="Payment Status: Cash on Delivery\n";
-}
+message+="\nPlease send the payment QR code to the customer on WhatsApp.";
 
 const storeNumber="919701067275";
 
@@ -608,7 +468,5 @@ p.telugu.includes(query)
 showProducts(products);
 showCart();
 
-</script>
-
-</body>
+</script></body>
 </html>
